@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Active link highlighting based on scroll position
     const sections = document.querySelectorAll('section');
-    
+
     window.addEventListener('scroll', () => {
         let current = '';
         sections.forEach(section => {
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Open modal when image is clicked
     clickableImages.forEach(img => {
-        img.addEventListener('click', function() {
+        img.addEventListener('click', function () {
             modal.classList.add('show');
             const galleryData = this.getAttribute('data-gallery');
             if (galleryData) {
@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (roleElement) {
         const textToType = roleElement.innerText;
         roleElement.innerText = '';
-        
+
         let i = 0;
         const typeWriter = () => {
             if (i < textToType.length) {
@@ -263,26 +263,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(typeWriter, 50); // Typing speed
             }
         };
-        
+
         // Start typing effect slightly after page load
-        setTimeout(typeWriter, 800); 
+        setTimeout(typeWriter, 800);
     }
 
     // Magnetic Buttons
     const btns = document.querySelectorAll('.btn');
     btns.forEach(btn => {
         btn.addEventListener('mousemove', (e) => {
-            if(window.innerWidth < 992) return;
+            if (window.innerWidth < 992) return;
             const rect = btn.getBoundingClientRect();
             const x = e.clientX - rect.left - rect.width / 2;
             const y = e.clientY - rect.top - rect.height / 2;
-            
+
             btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
         });
-        
+
         btn.addEventListener('mouseleave', () => {
-            if(window.innerWidth < 992) return;
-            btn.style.transform = ''; 
+            if (window.innerWidth < 992) return;
+            btn.style.transform = '';
         });
     });
 
@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const glowBg = document.querySelector('.glow-bg');
     if (glowBg) {
         document.addEventListener('mousemove', (e) => {
-            if(window.innerWidth < 992) return;
+            if (window.innerWidth < 992) return;
             const x = (window.innerWidth / 2 - e.pageX) / 30;
             const y = (window.innerHeight / 2 - e.pageY) / 30;
             glowBg.style.transform = `translate(${x}px, ${y}px)`;
@@ -319,9 +319,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeBtn = document.getElementById('theme-toggle');
     if (themeBtn) {
         const themeIcon = themeBtn.querySelector('i');
-        
+
         let currentTheme = localStorage.getItem('theme') || 'dark';
-        
+
         const applyTheme = (theme) => {
             if (theme === 'dark') {
                 document.documentElement.removeAttribute('data-theme'); // default
