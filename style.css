@@ -1,3 +1,10 @@
+/* ===== Register CSS Custom Property for spinning angle ===== */
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
 /* ===== CSS Variables & Theming ===== */
 :root {
     --bg-main: #0B0F19;
@@ -550,6 +557,7 @@ header.scrolled {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
 .job-photo {
@@ -950,6 +958,7 @@ header.scrolled {
     justify-content: space-between;
     background: var(--glass-bg);
     backdrop-filter: blur(10px);
+    position: relative;
 }
 
 .web-info h3 {
@@ -965,40 +974,233 @@ header.scrolled {
     line-height: 1.5;
 }
 
-/* Animated Glow Border for Cards */
+/* ===== Spinning Rainbow Border System ===== */
+
+/* Keyframe: Spin the conic-gradient angle 360° */
+@keyframes spinBorder {
+    0% {
+        --angle: 0deg;
+    }
+
+    100% {
+        --angle: 360deg;
+    }
+}
+
+/* Keyframe: Color-cycling glow pulse on box-shadow */
+@keyframes glowCyclePulse {
+    0% {
+        box-shadow: 0 0 14px 4px rgba(255, 0, 128, 0.50), 0 0 40px 10px rgba(255, 0, 128, 0.15);
+    }
+
+    14% {
+        box-shadow: 0 0 14px 4px rgba(255, 69, 0, 0.50), 0 0 40px 10px rgba(255, 69, 0, 0.15);
+    }
+
+    28% {
+        box-shadow: 0 0 14px 4px rgba(255, 215, 0, 0.50), 0 0 40px 10px rgba(255, 215, 0, 0.15);
+    }
+
+    42% {
+        box-shadow: 0 0 14px 4px rgba(0, 255, 136, 0.50), 0 0 40px 10px rgba(0, 255, 136, 0.15);
+    }
+
+    57% {
+        box-shadow: 0 0 14px 4px rgba(0, 207, 255, 0.50), 0 0 40px 10px rgba(0, 207, 255, 0.15);
+    }
+
+    71% {
+        box-shadow: 0 0 14px 4px rgba(123, 47, 255, 0.50), 0 0 40px 10px rgba(123, 47, 255, 0.15);
+    }
+
+    85% {
+        box-shadow: 0 0 14px 4px rgba(255, 0, 255, 0.50), 0 0 40px 10px rgba(255, 0, 255, 0.15);
+    }
+
+    100% {
+        box-shadow: 0 0 14px 4px rgba(255, 0, 128, 0.50), 0 0 40px 10px rgba(255, 0, 128, 0.15);
+    }
+}
+
+/* Keyframe: Subtle text breathing (scale in/out) synced to border */
+@keyframes textBreathing {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.012);
+    }
+}
+
+/* Keyframe: Shimmer sweep across card surface */
+@keyframes shimmerSweep {
+    0% {
+        transform: translateX(-120%) skewX(-15deg);
+    }
+
+    100% {
+        transform: translateX(250%) skewX(-15deg);
+    }
+}
+
+/* ---- Animated Glow Border for Cards ---- */
 .glow-border-card {
     position: relative;
     border: none !important;
+    isolation: isolate;
+    /* keep pseudo-elements contained */
 }
 
+/* Spinning conic-gradient rainbow border (::before) */
 .glow-border-card::before {
     content: '';
     position: absolute;
-    inset: -2px;
-    /* Border thickness */
+    inset: -3px;
     border-radius: inherit;
-    padding: 2px;
-    /* Must match inset to keep inner area exact */
-    background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
-    background-size: 200% 100%;
-    animation: rainbowBorder 3s linear infinite;
+    padding: 3px;
+    background: conic-gradient(from var(--angle),
+            #ff0080, #ff4500, #ffd700,
+            #00ff88, #00cfff, #7b2fff,
+            #ff00ff, #ff0080);
+    animation: spinBorder 3s linear infinite;
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
     pointer-events: none;
-    z-index: 10;
+    z-index: 0;
 }
 
-@keyframes rainbowBorder {
+/* Blurred aura glow behind card (::after) */
+.glow-border-card::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: inherit;
+    background: conic-gradient(from var(--angle),
+            #ff0080, #ff4500, #ffd700,
+            #00ff88, #00cfff, #7b2fff,
+            #ff00ff, #ff0080);
+    filter: blur(18px);
+    opacity: 0.45;
+    animation: spinBorder 3s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Color-cycling glow pulse on the card itself */
+.glow-border-card {
+    animation: glowCyclePulse 3s linear infinite;
+}
+
+/* Text breathing inside glow-border cards */
+.glow-border-card>*:not(img):not(video):not(.cert-photo):not(.job-photo):not(.edu-photo):not(.web-image-container):not(.cert-icon):not(.cert-year) {
+    animation: textBreathing 3s ease-in-out infinite;
+}
+
+/* Shimmer sweep overlay on hover */
+.glow-border-card>.card-shimmer-overlay,
+.glow-border-card .web-info::after,
+.glow-border-card .timeline-content::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.06) 50%, transparent 100%);
+    pointer-events: none;
+    z-index: 2;
+    animation: shimmerSweep 4s ease-in-out infinite;
+}
+
+/* Ensure card content stays inside borders cleanly */
+.glow-border-card,
+.glow-border-card .timeline-content,
+.glow-border-card .web-info {
+    overflow: hidden;
+}
+
+/* ===== Modern Card Entrance Animation ===== */
+@keyframes cardReveal {
     0% {
-        background-position: 0% 0%;
+        opacity: 0;
+        transform: translateY(40px) scale(0.92);
+        filter: blur(6px);
+    }
+
+    60% {
+        opacity: 1;
+        filter: blur(0px);
     }
 
     100% {
-        background-position: -200% 0%;
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0px);
     }
 }
+
+.glow-border-card.card-revealed {
+    animation: cardReveal 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Staggered delay classes for sequential card reveal */
+.glow-border-card.card-revealed:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.glow-border-card.card-revealed:nth-child(2) {
+    animation-delay: 0.12s;
+}
+
+.glow-border-card.card-revealed:nth-child(3) {
+    animation-delay: 0.24s;
+}
+
+.glow-border-card.card-revealed:nth-child(4) {
+    animation-delay: 0.36s;
+}
+
+.glow-border-card.card-revealed:nth-child(5) {
+    animation-delay: 0.48s;
+}
+
+.glow-border-card.card-revealed:nth-child(6) {
+    animation-delay: 0.60s;
+}
+
+.glow-border-card.card-revealed:nth-child(7) {
+    animation-delay: 0.72s;
+}
+
+/* ===== Tool Item Rainbow Glow on Hover ===== */
+@keyframes toolGlow {
+    0% {
+        box-shadow: 0 0 8px rgba(255, 0, 128, 0.5), inset 0 0 6px rgba(255, 0, 128, 0.15);
+    }
+
+    33% {
+        box-shadow: 0 0 8px rgba(0, 255, 136, 0.5), inset 0 0 6px rgba(0, 255, 136, 0.15);
+    }
+
+    66% {
+        box-shadow: 0 0 8px rgba(0, 207, 255, 0.5), inset 0 0 6px rgba(0, 207, 255, 0.15);
+    }
+
+    100% {
+        box-shadow: 0 0 8px rgba(255, 0, 128, 0.5), inset 0 0 6px rgba(255, 0, 128, 0.15);
+    }
+}
+
+.tool-item:hover {
+    animation: toolGlow 2s linear infinite;
+    border-color: transparent;
+}
+
 
 /* ===== Mastered Tools Section ===== */
 .tools-grid {
@@ -1172,15 +1374,15 @@ p strong:hover {
 }
 
 .hero-stats:nth-child(1) {
-    animation: float 6s ease-in-out infinite;
+    animation: float 6s ease-in-out infinite, glowCyclePulse 3s linear infinite;
 }
 
 .hero-stats:nth-child(2) {
-    animation: float 6s ease-in-out 2s infinite;
+    animation: float 6s ease-in-out 2s infinite, glowCyclePulse 3s linear infinite;
 }
 
 .hero-stats:nth-child(3) {
-    animation: float 6s ease-in-out 4s infinite;
+    animation: float 6s ease-in-out 4s infinite, glowCyclePulse 3s linear infinite;
 }
 
 .btn-primary {
@@ -1576,13 +1778,13 @@ p strong:hover {
     }
 }
 
-/* Shimmer effect for glass cards */
-.glass-card {
+/* Shimmer effect for glass cards (skip glow-border-cards — they have their own ::before) */
+.glass-card:not(.glow-border-card) {
     position: relative;
     overflow: hidden;
 }
 
-.glass-card::before {
+.glass-card:not(.glow-border-card)::before {
     content: '';
     position: absolute;
     top: 0;
@@ -1596,7 +1798,7 @@ p strong:hover {
     pointer-events: none;
 }
 
-.glass-card:hover::before {
+.glass-card:not(.glow-border-card):hover::before {
     left: 200%;
 }
 

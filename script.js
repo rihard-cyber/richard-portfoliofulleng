@@ -76,6 +76,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const animatedElements = document.querySelectorAll('.fade-in, .fade-in-up');
     animatedElements.forEach(el => observer.observe(el));
 
+    // Card Reveal Animation (glow-border-card staggered entrance)
+    const cardRevealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('card-revealed');
+                cardRevealObserver.unobserve(entry.target);
+            }
+        });
+    }, { root: null, rootMargin: '0px', threshold: 0.1 });
+
+    document.querySelectorAll('.glow-border-card').forEach(card => {
+        cardRevealObserver.observe(card);
+    });
+
     // Initialize VanillaTilt for 3D card effects (Only on Desktop)
     if (typeof VanillaTilt !== 'undefined' && window.innerWidth >= 992) {
         VanillaTilt.init(document.querySelectorAll(".glass-card, .glass-panel, .about-photo"), {
