@@ -1,0 +1,5 @@
+{
+    "yaml.validate": false,
+    "github-actions.diagnostics.enable": false,
+    "github.actions.diagnostics.enable": false
+}

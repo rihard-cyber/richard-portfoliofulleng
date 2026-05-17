@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize VanillaTilt for 3D card effects (Only on Desktop)
     if (typeof VanillaTilt !== 'undefined' && window.innerWidth >= 992) {
-        VanillaTilt.init(document.querySelectorAll(".glass-card, .glass-panel, .about-photo"), {
+        VanillaTilt.init(document.querySelectorAll(".glass-card, .glass-panel, .about-photo, .web-card, .cert-card"), {
             max: 5,
             speed: 400,
             glare: true,
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevBtn = document.getElementById('modalPrev');
     const nextBtn = document.getElementById('modalNext');
     const counter = document.getElementById('modalCounter');
-    const clickableImages = document.querySelectorAll('.profile-img, .exp-img, .cert-img, .edu-img');
+    const clickableImages = document.querySelectorAll('.profile-img, .exp-img, .cert-img, .edu-img, .web-img');
 
     let currentGallery = [];
     let currentIndex = 0;
@@ -216,41 +216,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== NEW EFFECTS & ANIMATIONS =====
 
-    // Custom Cursor
+    // Custom Cursor (Only on Desktop Non-Touch Devices)
     const cursorDot = document.querySelector('[data-cursor-dot]');
     const cursorOutline = document.querySelector('[data-cursor-outline]');
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.innerWidth <= 1024);
 
     if (cursorDot && cursorOutline) {
-        window.addEventListener('mousemove', (e) => {
-            const posX = e.clientX;
-            const posY = e.clientY;
+        if (isTouchDevice) {
+            cursorDot.style.display = 'none';
+            cursorOutline.style.display = 'none';
+        } else {
+            window.addEventListener('mousemove', (e) => {
+                const posX = e.clientX;
+                const posY = e.clientY;
 
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
 
-            cursorOutline.animate({
-                left: `${posX}px`,
-                top: `${posY}px`
-            }, { duration: 150, fill: "forwards" });
-        });
-
-        // Hover effect for cursor
-        const hoverables = document.querySelectorAll('a, .btn, .glass-card, .glass-panel, .menu-toggle, img, i');
-        hoverables.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursorOutline.style.width = '60px';
-                cursorOutline.style.height = '60px';
-                cursorOutline.style.backgroundColor = 'rgba(6, 182, 212, 0.1)';
-                cursorOutline.style.border = '1px solid rgba(6, 182, 212, 0.8)';
+                cursorOutline.animate({
+                    left: `${posX}px`,
+                    top: `${posY}px`
+                }, { duration: 150, fill: "forwards" });
             });
-            el.addEventListener('mouseleave', () => {
-                cursorOutline.style.width = '40px';
-                cursorOutline.style.height = '40px';
-                cursorOutline.style.backgroundColor = 'transparent';
-                cursorOutline.style.border = '2px solid rgba(6, 182, 212, 0.5)';
+
+            // Hover effect class toggle for custom cursor outline (fully CSS styled)
+            const hoverables = document.querySelectorAll('a, .btn, .glass-card, .glass-panel, .menu-toggle, img, i, .read-more-btn');
+            hoverables.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursorOutline.classList.add('cursor-hover');
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursorOutline.classList.remove('cursor-hover');
+                });
             });
-        });
+        }
     }
+
+    // Expandable Content Toggle (Read More / Show Less) - Smooth Heights
+    const readMoreButtons = document.querySelectorAll('.read-more-btn');
+    readMoreButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const content = button.previousElementSibling;
+            if (content && content.classList.contains('expandable-content')) {
+                content.classList.toggle('expanded');
+                
+                // Toggle text
+                if (content.classList.contains('expanded')) {
+                    button.innerText = 'Show Less';
+                } else {
+                    button.innerText = 'Read More';
+                }
+            }
+        });
+    });
 
     // Scroll Progress Bar
     const scrollProgress = document.getElementById('scroll-progress');
@@ -364,6 +382,95 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentTheme = 'dark';
             }
             applyTheme(currentTheme);
+        });
+    }
+
+    // Back to Top Button
+    const backToTop = document.getElementById('backToTop');
+    if (backToTop) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    // Contact Form Handler
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('formName').value.trim();
+            const email = document.getElementById('formEmail').value.trim();
+            const message = document.getElementById('formMessage').value.trim();
+
+            if (!name || !email || !message) {
+                formStatus.textContent = 'Please fill in all fields.';
+                formStatus.className = 'form-status error';
+                return;
+            }
+
+            if (!email.includes('@') || !email.includes('.')) {
+                formStatus.textContent = 'Please enter a valid email address.';
+                formStatus.className = 'form-status error';
+                return;
+            }
+
+            const btn = contactForm.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="ph ph-spinner" style="margin-right:8px;animation:spin 1s linear infinite;"></i>Sending...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('https://formspree.io/f/your-form-id', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, message })
+                });
+
+                if (response.ok) {
+                    formStatus.textContent = 'Message sent successfully! I will get back to you soon.';
+                    formStatus.className = 'form-status';
+                    contactForm.reset();
+                } else {
+                    throw new Error('Failed to send');
+                }
+            } catch {
+                formStatus.textContent = 'Could not send message. Please email me directly at richardpl.meha@gmail.com';
+                formStatus.className = 'form-status error';
+            }
+
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+    }
+
+    // Skeleton loader - remove after page load
+    const skeletons = document.querySelectorAll('.skeleton-card');
+    if (skeletons.length) {
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                skeletons.forEach(s => s.remove());
+            }, 600);
+        });
+    }
+
+    // Keyboard: Escape closes modal
+    // (already handled in modal code above)
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').catch(() => {
+                // SW registration failed silently
+            });
         });
     }
 
