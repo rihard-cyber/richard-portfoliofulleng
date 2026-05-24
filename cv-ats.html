@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Richard Patung Landu Meha — CV ATS</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --bg-canvas: #cad5e2;
+            --bg-paper: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #404040;
+            --accent-color: #1d4e89; /* Dark blue matching image */
+            --accent-light: #0e6ba8;
+            --border-color: #1a1a1a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-canvas);
+            color: var(--text-primary);
+            line-height: 1.4;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* CV Paper Container */
+        .cv-paper {
+            background-color: var(--bg-paper);
+            width: 100%;
+            max-width: 800px;
+            min-height: 1050px;
+            padding: 40px 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+
+        /* Floating action buttons */
+        .action-bar {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background-color: var(--accent-color);
+            color: #ffffff;
+            border: none;
+            border-radius: 30px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-action:hover {
+            background-color: var(--accent-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #333333;
+        }
+
+        .btn-secondary:hover {
+            background-color: #555555;
+        }
+
+        /* Header Styles */
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .name {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .contact-info {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            word-wrap: break-word;
+        }
+
+        .divider-double {
+            border-top: 3px double var(--border-color);
+            margin: 10px 0 15px 0;
+        }
+
+        /* Summary */
+        .summary-text {
+            font-size: 0.85rem;
+            text-align: justify;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        /* Section Layout */
+        section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+            border-bottom: 1.5px solid var(--border-color);
+            padding-bottom: 2px;
+        }
+
+        /* Job & Education Items */
+        .item-header {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            border-bottom: 0.5px solid #dddddd;
+            padding-bottom: 2px;
+        }
+
+        .item-header-text {
+            display: inline;
+        }
+
+        ul.bullets {
+            margin-left: 20px;
+            margin-bottom: 12px;
+            font-size: 0.82rem;
+            color: var(--text-primary);
+        }
+
+        ul.bullets li {
+            margin-bottom: 3px;
+            text-align: justify;
+        }
+
+        /* Certificates list */
+        .cert-item {
+            margin-bottom: 10px;
+            font-size: 0.82rem;
+        }
+
+        .cert-title-year {
+            font-weight: 700;
+        }
+
+        .cert-issuer {
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        /* Coursework styling */
+        .coursework {
+            margin-top: 5px;
+            font-size: 0.82rem;
+        }
+
+        .coursework span {
+            display: inline-block;
+            margin-right: 12px;
+        }
+
+        .checkmark {
+            color: #2e7d32;
+            font-weight: bold;
+            margin-right: 3px;
+        }
+
+        /* Footer Info Section (Matches Image 1 bottom) */
+        .footer-info {
+            font-size: 0.8rem;
+            border-top: 1.5px solid var(--border-color);
+            padding-top: 10px;
+            margin-top: 20px;
+        }
+
+        .footer-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .footer-info td {
+            padding: 3px 0;
+            vertical-align: top;
+        }
+
+        .footer-info td.label {
+            width: 100px;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        /* Print Media Queries */
+        @media print {
+            body {
+                background-color: #ffffff;
+                padding: 0;
+                color: #000000;
+            }
+
+            .cv-paper {
+                box-shadow: none;
+                padding: 0;
+                width: 100%;
+                max-width: 100%;
+                min-height: auto;
+            }
+
+            .action-bar {
+                display: none !important;
+            }
+
+            /* Adjust colors for pure B&W/Grayscale print if desired, but default browser print works well */
+            :root {
+                --bg-canvas: #ffffff;
+                --bg-paper: #ffffff;
+                --text-primary: #000000;
+                --text-secondary: #222222;
+                --accent-color: #000000;
+                --border-color: #000000;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Action Buttons -->
+    <div class="action-bar">
+        <a href="index.html" class="btn-action btn-secondary"><i class="ph ph-arrow-left"></i> Back to Portfolio</a>
+        <button onclick="window.print()" class="btn-action"><i class="ph ph-printer"></i> Print / Save PDF</button>
+    </div>
+
+    <!-- CV Document -->
+    <div class="cv-paper">
+        <header>
+            <h1 class="name">Richard Patung Landu Meha</h1>
+            <div class="contact-info">
+                Jl. Babelan, Kelurahan Bahagia Bekasi, Jawa Barat | +62 858-8810-2696 | https://www.linkedin.com/in/richard-patung-landu-meha-9099a3259
+            </div>
+            <div class="divider-double"></div>
+        </header>
+
+        <section id="summary">
+            <p class="summary-text">
+                Administration Office Professional with reliable skills in daily operational management, scheduling, employee databases, and comprehensive management reporting. Officially certified by BNSP as a Digital Marketer specializing in modern marketing strategies, SEO, persuasive copywriting, and conversion-based campaign optimization. Passionate about combining office managerial efficiency with the power of digital strategy to drive brand growth.
+            </p>
+        </section>
+
+        <section id="experience">
+            <h2 class="section-title">Experience</h2>
+            
+            <div class="job-item">
+                <div class="item-header">
+                    Security Division Administration / 2021–2026 / PT. Provices Indonesia — Ministry of Trade RI
+                </div>
+                <ul class="bullets">
+                    <li>Managed operational and personnel administration including personnel data control, document archiving, and structured database updating.</li>
+                    <li>Developed operational work schedules, monitored work, and ensured activities were effective according to organizational standards.</li>
+                    <li>Managed attendance, timesheets, and payroll administration as a basis for attendance/payment control.</li>
+                    <li>Prepared periodic operational and administrative reports for management evaluation.</li>
+                    <li>Coordinated and monitored the performance of ±150 personnel spread across 10 operational buildings.</li>
+                    <li>Managed the administration of operational needs, goods requests, and documentation control.</li>
+                </ul>
+            </div>
+
+            <div class="job-item">
+                <div class="item-header">
+                    Security Division Administration / 2019–2021 / PT. Provices Indonesia — The Wave Apartment, South Jakarta
+                </div>
+                <ul class="bullets">
+                    <li>Managed operational administration, personnel, document archiving, and personnel databases.</li>
+                    <li>Developed operational schedules, attendance recaps, timesheets, and employee payroll.</li>
+                    <li>Compiled periodic reports as evaluation material and reporting to User/Management.</li>
+                    <li>Processed goods requests and controlled documentation systematically.</li>
+                </ul>
+            </div>
+
+            <div class="job-item">
+                <div class="item-header">
+                    Security Guard / 2018–2019 / PT. Uremessing Guard — Department 18th Rasuna Said, South Jakarta
+                </div>
+                <ul class="bullets">
+                    <li>Executed building area security and guarded entry access as well as guest reception.</li>
+                    <li>Conducted routine patrols and checked operational areas.</li>
+                    <li>Monitored work environment activities and prevented potential disturbances.</li>
+                    <li>Prepared security activity reports via WhatsApp Group for leadership.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="education">
+            <h2 class="section-title">Education</h2>
+            <div class="edu-item">
+                <div class="item-header">
+                    Bachelor of Islamic Economics (S.E.) / STEBIS NUR ILMI AL-ISMAILIYUN / 2021–2024
+                </div>
+                <ul class="bullets">
+                    <li>GPA: 3.8</li>
+                    <li>
+                        Relevant Coursework: 
+                        <span class="checkmark">✔</span> Administrasi &nbsp;&nbsp;
+                        <span class="checkmark">✔</span> Manajemen &nbsp;&nbsp;
+                        <span class="checkmark">✔</span> Operasional &nbsp;&nbsp;
+                        <span class="checkmark">✔</span> Akuntansi dasar &nbsp;&nbsp;
+                        <span class="checkmark">✔</span> Komunikasi bisnis
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="certificates">
+            <h2 class="section-title">Certificates & Skills</h2>
+            
+            <div class="cert-item">
+                • <span class="cert-title-year">Gada Pratama Certificate / 2019</span> — 
+                <span class="cert-issuer">PT. Evan Putra Jaya</span>. 
+                (Basic Security, Security Procedures, Guest Access, Field Problem Solving, Teamwork, Discipline & SOP).
+            </div>
+
+            <div class="cert-item">
+                • <span class="cert-title-year">Karate Martial Arts Certificate / 2020</span> — 
+                <span class="cert-issuer">PT. Provices Group</span>. 
+                (Self-Defense Techniques, Physical & Mental Endurance, Reflexes, & Basic Fast Conflict Management).
+            </div>
+
+            <div class="cert-item">
+                • <span class="cert-title-year">Microsoft Office Admin / 2021</span> — 
+                <span class="cert-issuer">Sans Smart</span>. 
+                (Office Administration, Excel Data Processing, Letters & Documents, Digital Archives, Reports, & Google Workspace).
+            </div>
+
+            <div class="cert-item">
+                • <span class="cert-title-year">Microsoft Office Certificate / 2024</span> — 
+                <span class="cert-issuer">Borju Digital & Digital Course LKP</span>. 
+                (Data Management, Administrative Reporting, Professional Documentation, Presentation Development, & Digital Office Operations).
+            </div>
+
+            <div class="cert-item">
+                • <span class="cert-title-year">Digital Marketing Certificate: Copywriting / 2024</span> — 
+                <span class="cert-issuer">Belajar Skill</span>. 
+                (Copywriting, Content Writing, Basic SEO, Social Media Marketing, Promotional Content Creation, Branding Strategy, & Digital Campaigns).
+            </div>
+
+            <div class="cert-item">
+                • <span class="cert-title-year">Certified Public Speaking (CPS) / 2026</span> — 
+                <span class="cert-issuer">LKP WellldoneSkills Nawara Pratama</span>. 
+                (Public Speaking Fundamentals, Effective Communication Techniques, Stage Mastery, Body Language, Vocal Power, and Presentation Skills).
+            </div>
+
+            <div class="cert-item">
+                • <span class="cert-title-year">BNSP Digital Marketing Certification / 2026</span> — 
+                <span class="cert-issuer">National Professional Certification Agency (BNSP)</span>. 
+                (Comprehensive Digital Marketing Strategy, SEO/SEM, Social Media Management, Analytics, Persuasive Copywriting, and Conversion-Based Campaign Optimization).
+            </div>
+        </section>
+
+        <section id="contact-info-footer">
+            <h2 class="section-title">Contact Info</h2>
+            <div class="footer-info">
+                <table>
+                    <tr>
+                        <td class="label">Phone:</td>
+                        <td>+62 858-8810-2696</td>
+                        <td class="label">Address:</td>
+                        <td>Jl. Babelan, Kelurahan Bahagia, Bekasi, Jawa Barat</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Email:</td>
+                        <td>richardpl.meha@gmail.com</td>
+                        <td class="label">LinkedIn:</td>
+                        <td>https://www.linkedin.com/in/richard-patung-landu-meha-9099a3259</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Portfolio:</td>
+                        <td colspan="3">https://richard-cyber-portofolio.netlify.app/</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Automatically Trigger Print Dialog if URL contains print=true -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('print') === 'true') {
+                setTimeout(() => {
+                    window.print();
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>
