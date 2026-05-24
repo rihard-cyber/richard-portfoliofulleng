@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Richard Patung Landu Meha — CV ATS</title>
+    <title>Richard Patung Landu Meha — CV ATS (English)</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,9 +15,11 @@
             --bg-canvas: #cad5e2;
             --bg-paper: #ffffff;
             --text-primary: #1a1a1a;
-            --text-secondary: #404040;
+            --text-secondary: #4a5568;
             --accent-color: #1d4e89; /* Dark blue matching image */
             --accent-light: #0e6ba8;
+            --badge-bg: #e2e8f0;
+            --badge-text: #1d4e89;
             --border-color: #1a1a1a;
         }
 
@@ -31,7 +33,7 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-canvas);
             color: var(--text-primary);
-            line-height: 1.4;
+            line-height: 1.45;
             padding: 40px 20px;
             display: flex;
             justify-content: center;
@@ -43,9 +45,9 @@
         .cv-paper {
             background-color: var(--bg-paper);
             width: 100%;
-            max-width: 800px;
+            max-width: 820px;
             min-height: 1050px;
-            padding: 40px 50px;
+            padding: 50px 60px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             position: relative;
         }
@@ -94,16 +96,16 @@
         /* Header Styles */
         header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .name {
             font-family: 'Playfair Display', Georgia, serif;
-            font-size: 2.2rem;
+            font-size: 2.3rem;
             font-weight: 700;
             color: var(--accent-color);
             letter-spacing: 0.5px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .contact-info {
@@ -111,6 +113,7 @@
             color: var(--text-secondary);
             margin-bottom: 12px;
             word-wrap: break-word;
+            font-weight: 500;
         }
 
         .divider-double {
@@ -122,13 +125,14 @@
         .summary-text {
             font-size: 0.85rem;
             text-align: justify;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
             color: var(--text-primary);
         }
 
         /* Section Layout */
         section {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            page-break-inside: avoid; /* Prevent awkward print pagination splits */
         }
 
         .section-title {
@@ -136,28 +140,59 @@
             font-size: 1.25rem;
             font-weight: 700;
             color: var(--accent-color);
-            margin-bottom: 8px;
-            border-bottom: 1.5px solid var(--border-color);
-            padding-bottom: 2px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Highlight box for key skills or stats */
+        .highlight-bar {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border-left: 4px solid var(--accent-color);
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .highlight-bar strong {
+            color: var(--accent-color);
         }
 
         /* Job & Education Items */
-        .item-header {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-            border-bottom: 0.5px solid #dddddd;
-            padding-bottom: 2px;
+        .item-block {
+            margin-bottom: 15px;
+            page-break-inside: avoid;
         }
 
-        .item-header-text {
-            display: inline;
+        .item-header {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 2px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .item-title-company {
+            color: var(--accent-color);
+        }
+
+        .item-meta {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
         }
 
         ul.bullets {
             margin-left: 20px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             font-size: 0.82rem;
             color: var(--text-primary);
         }
@@ -167,34 +202,70 @@
             text-align: justify;
         }
 
+        ul.bullets li strong {
+            color: var(--accent-color);
+        }
+
+        /* Badge Grid for Skills & Tools */
+        .badge-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .badge {
+            background-color: var(--badge-bg);
+            color: var(--badge-text);
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid #cbd5e1;
+            display: inline-block;
+        }
+
+        /* Projects Section */
+        .project-item {
+            margin-bottom: 12px;
+            page-break-inside: avoid;
+        }
+
+        .project-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 3px;
+        }
+
+        .project-desc {
+            font-size: 0.82rem;
+            color: var(--text-primary);
+            text-align: justify;
+            margin-bottom: 4px;
+        }
+
         /* Certificates list */
         .cert-item {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-size: 0.82rem;
+            page-break-inside: avoid;
         }
 
         .cert-title-year {
             font-weight: 700;
+            color: var(--text-primary);
         }
 
         .cert-issuer {
             font-style: italic;
             color: var(--text-secondary);
+            font-weight: 500;
         }
 
-        /* Coursework styling */
-        .coursework {
-            margin-top: 5px;
-            font-size: 0.82rem;
-        }
-
-        .coursework span {
-            display: inline-block;
-            margin-right: 12px;
-        }
-
+        /* Checkmark icon */
         .checkmark {
-            color: #2e7d32;
+            color: #16a34a;
             font-weight: bold;
             margin-right: 3px;
         }
@@ -204,7 +275,8 @@
             font-size: 0.8rem;
             border-top: 1.5px solid var(--border-color);
             padding-top: 10px;
-            margin-top: 20px;
+            margin-top: 25px;
+            page-break-inside: avoid;
         }
 
         .footer-info table {
@@ -213,12 +285,12 @@
         }
 
         .footer-info td {
-            padding: 3px 0;
+            padding: 4px 0;
             vertical-align: top;
         }
 
         .footer-info td.label {
-            width: 100px;
+            width: 110px;
             font-weight: 700;
             color: var(--accent-color);
         }
@@ -243,14 +315,30 @@
                 display: none !important;
             }
 
-            /* Adjust colors for pure B&W/Grayscale print if desired, but default browser print works well */
             :root {
                 --bg-canvas: #ffffff;
                 --bg-paper: #ffffff;
                 --text-primary: #000000;
-                --text-secondary: #222222;
-                --accent-color: #000000;
+                --text-secondary: #333333;
+                --accent-color: #1d4e89; /* Keep the elegant dark blue in print */
+                --badge-bg: #f1f5f9;
+                --badge-text: #000000;
                 --border-color: #000000;
+            }
+
+            .highlight-bar {
+                background-color: #f8fafc !important;
+                border-left-color: #1d4e89 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .badge {
+                background-color: #f1f5f9 !important;
+                color: #1d4e89 !important;
+                border: 1px solid #cbd5e1 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
         }
     </style>
@@ -268,125 +356,178 @@
         <header>
             <h1 class="name">Richard Patung Landu Meha</h1>
             <div class="contact-info">
-                Jl. Babelan, Kelurahan Bahagia Bekasi, Jawa Barat | +62 858-8810-2696 | https://www.linkedin.com/in/richard-patung-landu-meha-9099a3259
+                Jl. Babelan, Kelurahan Bahagia Bekasi, Jawa Barat | +62 858-8810-2696 | richardpl.meha@gmail.com | LinkedIn: richard-patung-landu-meha-9099a3259
             </div>
             <div class="divider-double"></div>
         </header>
 
+        <!-- Professional Summary -->
         <section id="summary">
             <p class="summary-text">
-                Administration Office Professional with reliable skills in daily operational management, scheduling, employee databases, and comprehensive management reporting. Officially certified by BNSP as a Digital Marketer specializing in modern marketing strategies, SEO, persuasive copywriting, and conversion-based campaign optimization. Passionate about combining office managerial efficiency with the power of digital strategy to drive brand growth.
+                <strong>Administration Office Professional</strong> with over 7 years of work experience, coordinate <strong>&plusmn;150 personnel</strong>, and manage daily operational administration. Officially certified by <strong>BNSP as a Digital Marketer</strong> specializing in modern marketing strategies, <strong>Search Engine Optimization (SEO)</strong>, high-converting copywriting, and conversion-based campaigns. Proven track record of combining office managerial efficiency with the power of digital strategy to optimize organizational workflow and drive brand growth.
             </p>
         </section>
 
+        <!-- Core Highlight Bar -->
+        <div class="highlight-bar">
+            <strong>Key Competencies:</strong> Office Management &amp; Database Administration, Payroll &amp; Attendance Systems, Team Coordination (&plusmn;150 Personnel), Digital Marketing Strategy (SEO, Content Strategy, WhatsApp Checkout Integrations).
+        </div>
+
+        <!-- Mastered Tools & Technologies Section -->
+        <section id="tools">
+            <h2 class="section-title">Mastered Tools &amp; Technologies</h2>
+            <div class="badge-grid">
+                <span class="badge">Microsoft Office (Word, Excel, PowerPoint)</span>
+                <span class="badge">Google Workspace (Docs, Sheets, Forms, Drive)</span>
+                <span class="badge">Google Analytics</span>
+                <span class="badge">SEO &amp; Copywriting</span>
+                <span class="badge">Canva</span>
+                <span class="badge">CapCut (Video Editing)</span>
+                <span class="badge">HTML5</span>
+                <span class="badge">CSS3</span>
+                <span class="badge">JavaScript</span>
+                <span class="badge">Git &amp; GitHub</span>
+                <span class="badge">Git Bash</span>
+            </div>
+        </section>
+
+        <!-- Professional Work Experience -->
         <section id="experience">
-            <h2 class="section-title">Experience</h2>
+            <h2 class="section-title">Work Experience</h2>
             
-            <div class="job-item">
+            <div class="item-block">
                 <div class="item-header">
-                    Security Division Administration / 2021–2026 / PT. Provices Indonesia — Ministry of Trade RI
+                    <span class="item-title-company">Security Division Administration</span>
+                    <span class="item-meta">2021 – 2026 | PT. Provices Indonesia — Ministry of Trade RI</span>
                 </div>
                 <ul class="bullets">
-                    <li>Managed operational and personnel administration including personnel data control, document archiving, and structured database updating.</li>
-                    <li>Developed operational work schedules, monitored work, and ensured activities were effective according to organizational standards.</li>
-                    <li>Managed attendance, timesheets, and payroll administration as a basis for attendance/payment control.</li>
-                    <li>Prepared periodic operational and administrative reports for management evaluation.</li>
-                    <li>Coordinated and monitored the performance of ±150 personnel spread across 10 operational buildings.</li>
-                    <li>Managed the administration of operational needs, goods requests, and documentation control.</li>
+                    <li><strong>Personnel Coordination:</strong> Successfully coordinated and monitored the performance of <strong>&plusmn;150 personnel</strong> across 10 operational buildings.</li>
+                    <li><strong>Administrative Database:</strong> Managed operational data control, employee timesheets, attendance records, and structured database updating.</li>
+                    <li><strong>Payroll &amp; Scheduling:</strong> Designed operational work schedules and processed monthly payroll administration checks.</li>
+                    <li><strong>Management Reporting:</strong> Drafted periodic operational and administrative reports for management evaluation.</li>
                 </ul>
             </div>
 
-            <div class="job-item">
+            <div class="item-block">
                 <div class="item-header">
-                    Security Division Administration / 2019–2021 / PT. Provices Indonesia — The Wave Apartment, South Jakarta
+                    <span class="item-title-company">Security Division Administration</span>
+                    <span class="item-meta">2019 – 2021 | PT. Provices Indonesia — The Wave Apartment, South Jakarta</span>
                 </div>
                 <ul class="bullets">
-                    <li>Managed operational administration, personnel, document archiving, and personnel databases.</li>
-                    <li>Developed operational schedules, attendance recaps, timesheets, and employee payroll.</li>
-                    <li>Compiled periodic reports as evaluation material and reporting to User/Management.</li>
-                    <li>Processed goods requests and controlled documentation systematically.</li>
+                    <li><strong>Database Upkeep:</strong> Controlled personnel archives, attendance recaps, and monthly timesheets systematically.</li>
+                    <li><strong>Procurement Administration:</strong> Processed physical goods requests and managed office supply documentation.</li>
+                    <li><strong>Reporting:</strong> Developed operational performance reports for property manager evaluations.</li>
                 </ul>
             </div>
 
-            <div class="job-item">
+            <div class="item-block">
                 <div class="item-header">
-                    Security Guard / 2018–2019 / PT. Uremessing Guard — Department 18th Rasuna Said, South Jakarta
+                    <span class="item-title-company">Security Guard</span>
+                    <span class="item-meta">2018 – 2019 | PT. Uremessing Guard — Department 18th Rasuna Said, South Jakarta</span>
                 </div>
                 <ul class="bullets">
-                    <li>Executed building area security and guarded entry access as well as guest reception.</li>
-                    <li>Conducted routine patrols and checked operational areas.</li>
-                    <li>Monitored work environment activities and prevented potential disturbances.</li>
-                    <li>Prepared security activity reports via WhatsApp Group for leadership.</li>
+                    <li><strong>Operations Security:</strong> Managed guest reception, secured access points, and enforced building security protocols.</li>
+                    <li><strong>Incident Prevention:</strong> Monitored building premises through structured patrols to prevent safety disturbances.</li>
+                    <li><strong>Reporting:</strong> Reported daily security logs and incident briefs via coordinated digital channels.</li>
                 </ul>
             </div>
         </section>
 
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2 class="section-title">Developed Web &amp; App Projects</h2>
+            
+            <div class="project-item">
+                <div class="project-title">AI English Assistant App</div>
+                <p class="project-desc">An interactive, AI-powered conversational application designed to help users master English grammar, speaking, and vocabulary in real time. Built with clean HTML, CSS, and API integrations.</p>
+            </div>
+
+            <div class="project-item">
+                <div class="project-title">SaaS HRIS Si Presensi</div>
+                <p class="project-desc">An enterprise-grade Human Resource Information System and digital attendance booking application featuring real-time geofencing and automated timesheet reporting.</p>
+            </div>
+
+            <div class="project-item">
+                <div class="project-title">Pharmacy E-Commerce &amp; Profile</div>
+                <p class="project-desc">A full-featured pharmacy business profile and online medicine storefront featuring structured product categories, dynamic shopping cart calculation, and direct WhatsApp checkout integration.</p>
+            </div>
+
+            <div class="project-item">
+                <div class="project-title">JDC Secure Parking System</div>
+                <p class="project-desc">A robust digital parking management system prototype with real-time slot checking, secure booking validation, and parking gate pass verification.</p>
+            </div>
+        </section>
+
+        <!-- Education Section -->
         <section id="education">
             <h2 class="section-title">Education</h2>
-            <div class="edu-item">
+            <div class="item-block">
                 <div class="item-header">
-                    Bachelor of Islamic Economics (S.E.) / STEBIS NUR ILMI AL-ISMAILIYUN / 2021–2024
+                    <span class="item-title-company">Bachelor of Islamic Economics (S.E.)</span>
+                    <span class="item-meta">2021 – 2024 | STEBIS NUR ILMI AL-ISMAILIYUN</span>
                 </div>
                 <ul class="bullets">
-                    <li>GPA: 3.8</li>
+                    <li><strong>Academic Excellence:</strong> Graduated with a high <strong>GPA of 3.8 / 4.0</strong>.</li>
                     <li>
-                        Relevant Coursework: 
-                        <span class="checkmark">✔</span> Administrasi &nbsp;&nbsp;
-                        <span class="checkmark">✔</span> Manajemen &nbsp;&nbsp;
-                        <span class="checkmark">✔</span> Operasional &nbsp;&nbsp;
-                        <span class="checkmark">✔</span> Akuntansi dasar &nbsp;&nbsp;
-                        <span class="checkmark">✔</span> Komunikasi bisnis
+                        <strong>Relevant Coursework:</strong> 
+                        <span class="checkmark">✔</span> Administration &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="checkmark">✔</span> Management &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="checkmark">✔</span> Operations &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="checkmark">✔</span> Basic Accounting &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="checkmark">✔</span> Business Communication
                     </li>
                 </ul>
             </div>
         </section>
 
+        <!-- Professional Certificates & Achievements -->
         <section id="certificates">
-            <h2 class="section-title">Certificates & Skills</h2>
+            <h2 class="section-title">Certificates &amp; Credentials</h2>
             
             <div class="cert-item">
-                • <span class="cert-title-year">Gada Pratama Certificate / 2019</span> — 
-                <span class="cert-issuer">PT. Evan Putra Jaya</span>. 
-                (Basic Security, Security Procedures, Guest Access, Field Problem Solving, Teamwork, Discipline & SOP).
-            </div>
-
-            <div class="cert-item">
-                • <span class="cert-title-year">Karate Martial Arts Certificate / 2020</span> — 
-                <span class="cert-issuer">PT. Provices Group</span>. 
-                (Self-Defense Techniques, Physical & Mental Endurance, Reflexes, & Basic Fast Conflict Management).
-            </div>
-
-            <div class="cert-item">
-                • <span class="cert-title-year">Microsoft Office Admin / 2021</span> — 
-                <span class="cert-issuer">Sans Smart</span>. 
-                (Office Administration, Excel Data Processing, Letters & Documents, Digital Archives, Reports, & Google Workspace).
-            </div>
-
-            <div class="cert-item">
-                • <span class="cert-title-year">Microsoft Office Certificate / 2024</span> — 
-                <span class="cert-issuer">Borju Digital & Digital Course LKP</span>. 
-                (Data Management, Administrative Reporting, Professional Documentation, Presentation Development, & Digital Office Operations).
-            </div>
-
-            <div class="cert-item">
-                • <span class="cert-title-year">Digital Marketing Certificate: Copywriting / 2024</span> — 
-                <span class="cert-issuer">Belajar Skill</span>. 
-                (Copywriting, Content Writing, Basic SEO, Social Media Marketing, Promotional Content Creation, Branding Strategy, & Digital Campaigns).
+                • <span class="cert-title-year">BNSP Digital Marketing Certification (CDM) / 2026</span> — 
+                <span class="cert-issuer">National Professional Certification Agency (BNSP) / LKP Novasa</span>. 
+                (Digital Marketing Fundamentals, SEO, SEM, Social Media, Content Marketing, Analytics).
             </div>
 
             <div class="cert-item">
                 • <span class="cert-title-year">Certified Public Speaking (CPS) / 2026</span> — 
                 <span class="cert-issuer">LKP WellldoneSkills Nawara Pratama</span>. 
-                (Public Speaking Fundamentals, Effective Communication Techniques, Stage Mastery, Body Language, Vocal Power, and Presentation Skills).
+                (Public Speaking, Effective Communication, Presentation Skills).
             </div>
 
             <div class="cert-item">
-                • <span class="cert-title-year">BNSP Digital Marketing Certification / 2026</span> — 
-                <span class="cert-issuer">National Professional Certification Agency (BNSP)</span>. 
-                (Comprehensive Digital Marketing Strategy, SEO/SEM, Social Media Management, Analytics, Persuasive Copywriting, and Conversion-Based Campaign Optimization).
+                • <span class="cert-title-year">Microsoft Office Certificate / 2024</span> — 
+                <span class="cert-issuer">Borju Digital &amp; Digital Course LKP</span>. 
+                (Data Management, Administrative Reporting, Professional Documentation, Presentation Development, &amp; Digital Office Operations).
+            </div>
+
+            <div class="cert-item">
+                • <span class="cert-title-year">Digital Marketing Certificate: Copywriting / 2024</span> — 
+                <span class="cert-issuer">Belajar Skill</span>. 
+                (Copywriting, Content Writing, SEO Basics, Promotional Campaigns).
+            </div>
+
+            <div class="cert-item">
+                • <span class="cert-title-year">Microsoft Office Admin / 2021</span> — 
+                <span class="cert-issuer">Sans Smart</span>. 
+                (Office Administration, Excel Data Processing, Letters &amp; Documents, Digital Archives).
+            </div>
+
+            <div class="cert-item">
+                • <span class="cert-title-year">Karate Martial Arts Certificate / 2020</span> — 
+                <span class="cert-issuer">PT. Provices Group</span>. 
+                (Self-Defense, Mental Endurance, Reflexes, Conflict Management).
+            </div>
+
+            <div class="cert-item">
+                • <span class="cert-title-year">Gada Pratama Certificate / 2019</span> — 
+                <span class="cert-issuer">PT. Evan Putra Jaya</span>. 
+                (Basic Security Operations, Access Control, Emergency Procedures, SOP).
             </div>
         </section>
 
+        <!-- Detailed Contact Info (Matches image layout) -->
         <section id="contact-info-footer">
             <h2 class="section-title">Contact Info</h2>
             <div class="footer-info">
@@ -405,7 +546,7 @@
                     </tr>
                     <tr>
                         <td class="label">Portfolio:</td>
-                        <td colspan="3">https://richard-cyber-portofolio.netlify.app/</td>
+                        <td colspan="3">https://rihard-cyber.github.io/richard-portfoliofulleng/</td>
                     </tr>
                 </table>
             </div>
