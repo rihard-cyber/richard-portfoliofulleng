@@ -1140,31 +1140,49 @@ header.scrolled {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 30px;
+    gap: 20px;
     padding: 20px 0;
 }
 
 .tool-item {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     background: var(--glass-bg);
     backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 8px;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
                 border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
                 box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    padding: 10px 6px;
 }
 
 .tool-item img {
-    width: 45px;
-    height: 45px;
+    width: 38px;
+    height: 38px;
     transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    flex-shrink: 0;
+}
+
+.tool-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-align: center;
+    line-height: 1.2;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90px;
+    transition: color 0.3s ease;
 }
 
 .tool-item:hover {
@@ -1175,6 +1193,10 @@ header.scrolled {
 
 .tool-item:hover img {
     transform: scale(1.1);
+}
+
+.tool-item:hover .tool-label {
+    color: var(--accent-primary);
 }
 
 /* Handle icon visibility across themes */
@@ -1476,6 +1498,27 @@ p strong:hover {
         gap: 15px;
         padding: 15px 5px 30px 5px;
     }
+
+    /* Tools grid: 4 per row on tablet */
+    .tools-grid {
+        gap: 14px;
+    }
+
+    .tool-item {
+        width: 90px;
+        height: 90px;
+        padding: 8px 5px;
+    }
+
+    /* Contact wrapper: stack vertically */
+    .contact-wrapper {
+        gap: 20px;
+    }
+
+    .contact-form {
+        width: 100%;
+        max-width: 100%;
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -1499,6 +1542,27 @@ p strong:hover {
     .edu-details {
         flex-direction: column;
         gap: 10px;
+    }
+
+    /* Tools grid: 3 per row on small screens */
+    .tools-grid {
+        gap: 12px;
+    }
+
+    .tool-item {
+        width: 88px;
+        height: 88px;
+        padding: 8px 4px;
+    }
+
+    .tool-item img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .tool-label {
+        font-size: 0.6rem;
+        max-width: 80px;
     }
 }
 
@@ -1935,12 +1999,25 @@ p strong:hover {
     outline-offset: 3px;
 }
 
-/* ===== Contact Form Styles ===== */
+/* ===== Contact Section ===== */
 .contact-wrapper {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 30px;
-    align-items: center;
+    align-items: start;
+}
+
+@media screen and (max-width: 768px) {
+    .contact-wrapper {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Contact info swipe slider - override grid on mobile */
+.contact-info.swipe-slider {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
 }
 
 .contact-form {
