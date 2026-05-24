@@ -1135,7 +1135,26 @@ header.scrolled {
 }
 
 
-/* ===== Mastered Tools Section ===== */
+/* ===== Tech Stack & Tools Section ===== */
+.tools-category {
+    margin-bottom: 10px;
+}
+
+.tools-subheading {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.3px;
+}
+
+.tools-subheading i {
+    color: var(--accent-primary);
+    font-size: 1.3rem;
+}
+
 .tools-grid {
     display: flex;
     flex-wrap: wrap;
