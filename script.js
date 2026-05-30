@@ -1,4 +1,99 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // ===== BACKGROUND CANVAS: LINES + PARTICLES =====
+    const bgCanvas = document.getElementById('bg-canvas');
+    if (bgCanvas) {
+        const ctx = bgCanvas.getContext('2d');
+        let W, H;
+
+        const resize = () => {
+            W = bgCanvas.width = window.innerWidth;
+            H = bgCanvas.height = window.innerHeight;
+        };
+        resize();
+        window.addEventListener('resize', resize);
+
+        const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        const lineCount = isTouch ? 20 : 50;
+        const particleCount = isTouch ? 30 : 70;
+
+        // Layer 2: Falling Light Lines
+        const lines = [];
+        for (let i = 0; i < lineCount; i++) {
+            lines.push({
+                x: Math.random() * W,
+                y: Math.random() * H,
+                width: Math.random() * 2 + 0.5,
+                height: Math.random() * 120 + 40,
+                speed: Math.random() * 1.5 + 0.5,
+                opacity: Math.random() * 0.35 + 0.1,
+                hue: Math.random() > 0.5 ? 182 : 260,
+            });
+        }
+
+        // Layer 3: Rising Particles
+        const particles = [];
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * W,
+                y: Math.random() * H,
+                r: Math.random() * 2.5 + 1,
+                speed: Math.random() * 0.4 + 0.1,
+                drift: (Math.random() - 0.5) * 0.3,
+                opacity: Math.random() * 0.5 + 0.1,
+                hue: Math.random() > 0.5 ? 182 : 260,
+            });
+        }
+
+        function drawBg() {
+            ctx.clearRect(0, 0, W, H);
+
+            // --- Layer 2: Falling Lines ---
+            lines.forEach(line => {
+                line.y += line.speed;
+                if (line.y > H + line.height) {
+                    line.y = -line.height;
+                    line.x = Math.random() * W;
+                }
+
+                const gradient = ctx.createLinearGradient(line.x, line.y, line.x, line.y + line.height);
+                gradient.addColorStop(0, `hsla(${line.hue}, 70%, 60%, 0)`);
+                gradient.addColorStop(0.5, `hsla(${line.hue}, 70%, 60%, ${line.opacity})`);
+                gradient.addColorStop(1, `hsla(${line.hue}, 70%, 60%, 0)`);
+
+                ctx.fillStyle = gradient;
+                ctx.fillRect(line.x, line.y, line.width, line.height);
+            });
+
+            // --- Layer 3: Rising Particles ---
+            particles.forEach(p => {
+                p.y -= p.speed;
+                p.x += p.drift + Math.sin(p.y * 0.01) * 0.2;
+
+                if (p.y < -10) {
+                    p.y = H + 10;
+                    p.x = Math.random() * W;
+                }
+                if (p.x < -10) p.x = W + 10;
+                if (p.x > W + 10) p.x = -10;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${p.hue}, 70%, 60%, ${p.opacity})`;
+                ctx.fill();
+
+                // Glow
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${p.hue}, 70%, 60%, ${p.opacity * 0.15})`;
+                ctx.fill();
+            });
+
+            requestAnimationFrame(drawBg);
+        }
+
+        drawBg();
+    }
+
     // Mobile Menu Toggle
     const mobileMenuBtn = document.getElementById('mobile-menu');
     const navLinks = document.querySelector('.nav-links');
@@ -290,7 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let i = 0;
         const typeWriter = () => {
             if (i < textToType.length) {
-                roleElement.innerHTML += textToType.charAt(i);
+                roleElement.textContent += textToType.charAt(i);
                 i++;
                 setTimeout(typeWriter, 50); // Typing speed
             }
@@ -331,21 +426,67 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Dynamic Stats Logic
     const currentYear = new Date().getFullYear();
-    const startYear = 2018; // Tahun mulai bekerja (Job 1)
+    const startYear = 2018;
     const expStatEl = document.getElementById('stat-experience');
     if (expStatEl) {
-        // Otomatis hitung tahun berjalan dikurang tahun mulai
         const yearsOfExp = Math.max(1, currentYear - startYear);
-        const label = expStatEl.getAttribute('data-label') || '+ Tahun';
+        const label = expStatEl.getAttribute('data-label') || '+ Years';
         expStatEl.innerText = `${yearsOfExp}${label}`;
     }
 
     const certCards = document.querySelectorAll('.cert-card');
     const certStatEl = document.getElementById('stat-certificates');
     if (certStatEl && certCards.length > 0) {
-        // Otomatis hitung jumlah elemen sertifikat di DOM
         certStatEl.innerText = `${certCards.length}+`;
     }
+
+    // ===== ANIMATED COUNTERS =====
+    function animateCounter(el, target, suffix = '') {
+        const duration = 1500;
+        const steps = 60;
+        const increment = target / steps;
+        let current = 0;
+        let step = 0;
+        const timer = setInterval(() => {
+            step++;
+            current = Math.min(current + increment, target);
+            el.textContent = Math.floor(current) + suffix;
+            if (step >= steps) {
+                el.textContent = target + suffix;
+                clearInterval(timer);
+            }
+        }, duration / steps);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const text = el.textContent.trim();
+                const match = text.match(/^(\d+)(\+)?/);
+                if (match) {
+                    const target = parseInt(match[1]);
+                    const suffix = match[2] || '';
+                    el.textContent = '0';
+                    animateCounter(el, target, suffix);
+                }
+                counterObserver.unobserve(el);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.stat-number').forEach(el => counterObserver.observe(el));
+
+    // ===== SMOOTH SECTION REVEAL =====
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('section-visible');
+            }
+        });
+    }, { threshold: 0.05 });
+
+    document.querySelectorAll('.section').forEach(s => revealObserver.observe(s));
 
     // ===== Theme Switcher Logic =====
     const themeBtn = document.getElementById('theme-toggle');
@@ -448,7 +589,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 formStatus.className = 'form-status error';
             }
 
-            btn.innerHTML = originalText;
+            btn.replaceChildren();
+            btn.insertAdjacentHTML('beforeend', originalText);
             btn.disabled = false;
         });
     }
@@ -465,6 +607,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Keyboard: Escape closes modal
     // (already handled in modal code above)
+
+    // Preserve scroll on back button (BFCache)
+    window.addEventListener('pageshow', (e) => {
+        if (e.persisted) {
+            // Page was restored from BFCache — scroll already preserved
+        }
+    });
 
     // Register Service Worker
     if ('serviceWorker' in navigator) {
