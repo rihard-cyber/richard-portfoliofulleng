@@ -361,7 +361,7 @@
     <!-- Floating Action Buttons -->
     <div class="action-bar">
         <a href="index.html" class="btn-action btn-secondary"><i class="ph ph-arrow-left"></i> Back to Portfolio</a>
-        <a href="../cv-ats.html" class="btn-action btn-secondary"><i class="ph ph-globe"></i> Indonesian CV</a>
+        <a href="../cv-ats.html" class="btn-action btn-secondary" onclick="event.preventDefault(); window.location.href = window.location.pathname.replace(/\/en\/cv-ats\.html$/, '').replace(/\/$/, '') + '/cv-ats.html';"><i class="ph ph-globe"></i> Indonesian CV</a>
         <button onclick="window.print()" class="btn-action"><i class="ph ph-printer"></i> Print / Save PDF</button>
     </div>
 
