@@ -187,12 +187,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize VanillaTilt for 3D card effects (Only on Desktop)
     if (typeof VanillaTilt !== 'undefined' && window.innerWidth >= 992) {
-        VanillaTilt.init(document.querySelectorAll(".glass-card, .glass-panel, .about-photo, .web-card, .cert-card"), {
-            max: 5,
+        VanillaTilt.init(document.querySelectorAll(".glass-card, .glass-panel, .about-photo, .web-card, .cert-card, .timeline-content, .education-card"), {
+            max: 12,
             speed: 400,
             glare: true,
             "max-glare": 0.15,
-            scale: 1.02
+            scale: 1.02,
+            perspective: 1200
         });
     }
 

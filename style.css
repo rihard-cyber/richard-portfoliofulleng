@@ -1053,13 +1053,16 @@ header.scrolled {
                 border-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
                 box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     isolation: isolate;
+    transform-style: preserve-3d;
 }
 
 .glow-border-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(var(--accent-rgb), 0.45) !important;
-    box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.25),
-                0 0 20px 0 rgba(var(--accent-rgb), 0.15);
+    transform: translateY(-8px);
+    border-color: rgba(var(--accent-rgb), 0.6) !important;
+    box-shadow: 
+        0 20px 40px -15px rgba(0, 0, 0, 0.4),
+        0 0 30px -5px rgba(var(--accent-rgb), 0.25),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
 /* Faint shimmer sweep overlay on hover */
@@ -1079,6 +1082,68 @@ header.scrolled {
 
 .glow-border-card:hover::before {
     animation: shimmerSweep 3s ease-in-out infinite;
+}
+
+/* Enable 3D transform on tilted cards & intermediate containers */
+.timeline-content,
+.data-project-card,
+.education-card,
+.cert-card,
+.web-card,
+.glass-card,
+.glass-panel,
+.web-info,
+.edu-header {
+    transform-style: preserve-3d;
+}
+
+/* Layered elements inside tilted cards (Z-Axis offsets) */
+.job-photo,
+.web-image-container,
+.cert-photo,
+.edu-header .edu-icon,
+.dp-icon,
+.step-number {
+    transform: translateZ(40px);
+    transform-style: preserve-3d;
+}
+
+.job-title,
+.web-info h3,
+.cert-card h3,
+.degree,
+.data-project-card h3,
+.timeline-date,
+.cert-year,
+.pill,
+.dp-tools,
+.btn {
+    transform: translateZ(25px);
+}
+
+.job-duties,
+.web-info p,
+.cert-desc,
+.edu-courses,
+.dp-desc,
+.dp-highlight {
+    transform: translateZ(12px);
+}
+
+/* Dome Halo Glow */
+.web-card::after,
+.timeline-content::after,
+.cert-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateZ(10px);
+    width: 80%;
+    height: 120px;
+    background: radial-gradient(circle, rgba(var(--accent-rgb), 0.15) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
 }
 
 /* Ensure card content stays inside borders cleanly */
